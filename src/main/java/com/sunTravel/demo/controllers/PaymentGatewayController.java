@@ -23,7 +23,7 @@ public class PaymentGatewayController
     @Autowired
     private PaymentGatewayService paymentGatewayService;
     @PostMapping("get")
-    public ResponseEntity<FormDataDto> get( @RequestBody HashMap<String,String> formData) throws IOException
+    public ResponseEntity<HashMap<String,String>> get( @RequestBody HashMap<String,String> formData) throws IOException
     {
         String url=paymentGatewayService.getGateway( formData );
 //        for( Map.Entry<String, String> entry : formData.entrySet() ){
