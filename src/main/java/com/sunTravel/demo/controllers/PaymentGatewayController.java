@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping(value = "api/v1/paymentGateway")
 @CrossOrigin
@@ -19,10 +23,16 @@ public class PaymentGatewayController
     @Autowired
     private PaymentGatewayService paymentGatewayService;
     @PostMapping("get")
-    public ResponseEntity<FormDataDto> get( @RequestBody FormDataDto formData){
-        System.out.println(formData.getAMOUNT());
-        paymentGatewayService.getGateway(formData);
-        return new ResponseEntity( formData,HttpStatus.OK);
+    public ResponseEntity<FormDataDto> get( @RequestBody HashMap<String,String> formData) throws IOException
+    {
+        String url=paymentGatewayService.getGateway( formData );
+//        for( Map.Entry<String, String> entry : formData.entrySet() ){
+//            System.out.println( entry.getKey() + " => " + entry.getValue() );
+//        }
+        HashMap<String,String> map=new HashMap<>();
+        System.out.println(url);
+        map.put( "location",url );
+        return new ResponseEntity( map,HttpStatus.OK);
     }
 
 }
